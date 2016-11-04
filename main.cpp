@@ -6,10 +6,15 @@
 #include <iostream>
 #include <pthread.h>
 #include <unistd.h>
+
+#define REINDEERS 20
+#define SPRITES 10
+
 using namespace std;
 
-int main()
-{
+int main() {
+
    cout << "Hello, world!" << endl;
+
    return 0;
 }
