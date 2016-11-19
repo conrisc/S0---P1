@@ -102,18 +102,6 @@ void *gnome3(void *arg) {
   }
 }
 
-// void santa() {
-//   while (true) {
-//     semWait(n);
-//     semWait(s);
-//     take();
-//     semSignal(s);
-//     semSignal(e);
-//     consume();
-//   }
-// }
-
-
 int main() {
   sem_init(&toyMut,0,1);  //mutex na buffory (wszystkie 3)
   sem_init(&gnomes,0,1);
