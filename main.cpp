@@ -20,19 +20,23 @@ int temp;
 
 void *gnome1(void *arg) {
   while (true) {
-    cout<<"1:\n";
     sem_wait(&gnomes);
+    cout<<"1:\n";
     if(firstPartNotCreated) {
       createdToy=0;
       firstPartNotCreated=false;
       cout<<"  Stworzylem pierwsza czesc\n";
       sem_post(&gnomes);
+      sem_getvalue(&partSem, &temp);
+      cout<<"  WartoscB: "<<temp<<"\n";
       sem_wait(&partSem);
+      sem_getvalue(&partSem, &temp);
+      cout<<"  WartoscA: "<<temp<<"\n";
     }
     else {
       createdToy+=0;
       sem_wait(&toyMut);
-      toy[createdToy-1][n[createdToy-1]]=true;
+      toy[createdToy-1][1]=true;
       n[createdToy-1]++;
       sem_post(&toyMut);
       firstPartNotCreated=true;
@@ -45,8 +49,8 @@ void *gnome1(void *arg) {
 
 void *gnome2(void *arg) {
   while (true) {
-    cout<<"2:\n";
     sem_wait(&gnomes);
+    cout<<"2:\n";
     if(firstPartNotCreated) {
       createdToy=1;
       firstPartNotCreated=false;
@@ -57,7 +61,7 @@ void *gnome2(void *arg) {
     else {
       createdToy+=1;
       sem_wait(&toyMut);
-      toy[createdToy-1][n[createdToy-1]]=true;
+      toy[createdToy-1][1]=true;
       n[createdToy-1]++;
       sem_post(&toyMut);
       firstPartNotCreated=true;
@@ -83,8 +87,8 @@ void *gnome2(void *arg) {
 
 int main() {
   sem_init(&toyMut,0,1);  //mutex na buffory (wszystkie 3)
-  sem_init(&gnomes,0,1);  //semaphore na 2 gnomy
-  sem_init(&partSem,0,0);  //semaphore na 2 gnomy
+  sem_init(&gnomes,0,1);
+  sem_init(&partSem,0,0);
   sem_init(&toyS[0],0,30);
   sem_init(&toyS[1],0,30);
   sem_init(&toyS[2],0,30);
