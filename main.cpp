@@ -21,7 +21,7 @@ int temp;
 
 void *gnome1(void *arg) {
   while (true) {
-    sleep(2);
+    sleep(1);
     sem_wait(&gnomes);
     cout<<"1:\n";
     if(firstPartNotCreated) {
@@ -35,8 +35,9 @@ void *gnome1(void *arg) {
     else {
       createdToy+=0;
       sem_wait(&toyMut);
-      // toy[createdToy-1][1]=true;
-      // n[createdToy-1]++;
+      toy[createdToy-1][n[createdToy-1]]=true;
+      n[createdToy-1]++;
+      cout<<  "BUFFOR "<<createdToy<<" :"<<n[createdToy-1]<<endl;
       sem_post(&toyMut);
       firstPartNotCreated=true;
       cout<<"  1 Dokonczylem tworzyc zabawke\n";
@@ -47,9 +48,8 @@ void *gnome1(void *arg) {
 }
 
 void *gnome2(void *arg) {
-  sleep(1);
   while (true) {
-    sleep(2);
+    sleep(1);
     sem_wait(&gnomes);
     cout<<"2:\n";
     if(firstPartNotCreated) {
@@ -63,8 +63,9 @@ void *gnome2(void *arg) {
     else {
       createdToy+=1;
       sem_wait(&toyMut);
-      toy[createdToy-1][1]=true;
+      toy[createdToy-1][n[createdToy-1]]=true;
       n[createdToy-1]++;
+      cout<<  "BUFFOR "<<createdToy<<" :"<<n[createdToy-1]<<endl;
       sem_post(&toyMut);
       firstPartNotCreated=true;
       cout<<"  2 Dokonczylem tworzyc zabawke\n";
@@ -75,13 +76,12 @@ void *gnome2(void *arg) {
 }
 
 void *gnome3(void *arg) {
-  sleep(2);
   while (true) {
-    sleep(2);
+    sleep(1);
     sem_wait(&gnomes);
     cout<<"3:\n";
     if(firstPartNotCreated) {
-      createdToy=1;
+      createdToy=2;
       firstPartNotCreated=false;
       cout<<"  3 Stworzylem pierwsza czesc\n";
       blockedGnome=2;
@@ -89,10 +89,11 @@ void *gnome3(void *arg) {
       sem_wait(&gnomeSem[2]);
     }
     else {
-      createdToy+=1;
+      createdToy+=2;
       sem_wait(&toyMut);
-      toy[createdToy-1][1]=true;
+      toy[createdToy-1][n[createdToy-1]]=true;
       n[createdToy-1]++;
+      cout<<  "BUFFOR "<<createdToy<<" :"<<n[createdToy-1]<<endl;
       sem_post(&toyMut);
       firstPartNotCreated=true;
       cout<<"  3 Dokonczylem tworzyc zabawke\n";
