@@ -14,7 +14,7 @@ sem_t gnomes, gnomeSem[3], toyMut;
 int blockedGnome;
 int createdToy;
 bool firstPartNotCreated=true;
-int n[3];
+int toy[3];
 
 void *gnome(void *gnomeID) {
   int gID = (long)gnomeID;
@@ -33,8 +33,8 @@ void *gnome(void *gnomeID) {
     else {
       createdToy+=gID;
       sem_wait(&toyMut);
-      n[createdToy-1]++;
-      cout<<  "BUFFOR "<<createdToy<<": "<<n[createdToy-1]<<endl;
+      toy[createdToy-1]++;
+      cout<<  "BUFFOR "<<createdToy<<": "<<toy[createdToy-1]<<endl;
       sem_post(&toyMut);
       firstPartNotCreated=true;
       cout<<"  "<<gID<<" Dokonczylem tworzyc zabawke\n";
@@ -57,7 +57,7 @@ int main() {
     pthread_create(&threads[i], NULL, gnome, (void *)i);
 
   for (int i=0;i<3;i++)
-  pthread_join(threads[i], NULL);
+    pthread_join(threads[i], NULL);
 
    return 0;
 }
