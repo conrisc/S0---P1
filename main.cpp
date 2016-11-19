@@ -10,44 +10,62 @@
 
 using namespace std;
 
-sem_t mutex, e;
-int n=0;
-int tab[20];
+sem_t partSem,toyMut, toyS[3], gnomes;
+int createdToy;
+bool firstPartNotCreated=true;
+int n[3];
+bool toy[3][30];
+
+int temp;
 
 void *gnome1(void *arg) {
   while (true) {
-    sem_wait(&e);
-    sem_wait(&mutex);
-    tab[n]=1;
-    n++;
-    cout<<tab[n-1]<<endl;
-    sem_post(&mutex);
+    cout<<"1:\n";
+    sem_wait(&gnomes);
+    if(firstPartNotCreated) {
+      createdToy=0;
+      firstPartNotCreated=false;
+      cout<<"  Stworzylem pierwsza czesc\n";
+      sem_post(&gnomes);
+      sem_wait(&partSem);
+    }
+    else {
+      createdToy+=0;
+      sem_wait(&toyMut);
+      toy[createdToy-1][n[createdToy-1]]=true;
+      n[createdToy-1]++;
+      sem_post(&toyMut);
+      firstPartNotCreated=true;
+      cout<<"  Dokonczylem tworzyc zabawke\n";
+      sem_post(&partSem);
+      sem_post(&gnomes);
+    }
   }
-  pthread_exit(NULL);
 }
 
 void *gnome2(void *arg) {
   while (true) {
-    sem_wait(&e);
-    sem_wait(&mutex);
-    tab[n]=2;
-    n++;
-    cout<<tab[n-1]<<endl;
-    sem_post(&mutex);
+    cout<<"2:\n";
+    sem_wait(&gnomes);
+    if(firstPartNotCreated) {
+      createdToy=1;
+      firstPartNotCreated=false;
+      cout<<"  Stworzylem pierwsza czesc\n";
+      sem_post(&gnomes);
+      sem_wait(&partSem);
+    }
+    else {
+      createdToy+=1;
+      sem_wait(&toyMut);
+      toy[createdToy-1][n[createdToy-1]]=true;
+      n[createdToy-1]++;
+      sem_post(&toyMut);
+      firstPartNotCreated=true;
+      cout<<"  Dokonczylem tworzyc zabawke\n";
+      sem_post(&partSem);
+      sem_post(&gnomes);
+    }
   }
-  pthread_exit(NULL);
-}
-
-void *gnome3(void *arg) {
-  while (true) {
-    sem_wait(&e);
-    sem_wait(&mutex);
-    tab[n]=3;
-    n++;
-    cout<<tab[n-1]<<endl;
-    sem_post(&mutex);
-  }
-  pthread_exit(NULL);
 }
 
 
@@ -64,18 +82,23 @@ void *gnome3(void *arg) {
 
 
 int main() {
-  sem_init(&mutex,0,1);
-  sem_init(&e,0,20);
+  sem_init(&toyMut,0,1);  //mutex na buffory (wszystkie 3)
+  sem_init(&gnomes,0,1);  //semaphore na 2 gnomy
+  sem_init(&partSem,0,0);  //semaphore na 2 gnomy
+  sem_init(&toyS[0],0,30);
+  sem_init(&toyS[1],0,30);
+  sem_init(&toyS[2],0,30);
 
+  cout<<sem_getvalue(&partSem, &temp)<<endl;
   pthread_t threads[3];
 
   pthread_create(&threads[0], NULL, gnome1, NULL);
   pthread_create(&threads[1], NULL, gnome2, NULL);
-  pthread_create(&threads[2], NULL, gnome3, NULL);
+  // pthread_create(&threads[2], NULL, gnome3, NULL);
 
   pthread_join(threads[0], NULL);
   pthread_join(threads[1], NULL);
-  pthread_join(threads[2], NULL);
+  // pthread_join(threads[2], NULL);
 
    return 0;
 }
