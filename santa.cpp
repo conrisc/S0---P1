@@ -6,7 +6,18 @@
 
 void *santa(void *sth) {
   while (true) {
-    cout << "santa(): Ho, ho, ho!" << endl;
-    sleep(3);   
+    sem_wait(&santaSem);
+   
+    sem_wait(&toyMut);
+    cout << "santa(): Zabawki się uzbierały, wstaję do pracy..." << endl;
+    
+    for (int i = 0; i < 3; i++)
+      toy[i] -= 3;
+
+    sleep(3);
+
+    cout << "santa(): I po robocie. Czas iść spać..." << endl;
+    cout << "ZABAWKI [1/2/3]: " << toy[0] << "/" << toy[1] << "/" << toy[2] << endl;
+    sem_post(&toyMut);
   }
 }

@@ -27,7 +27,14 @@ void *gnome(void *gnomeID) {
       firstPartNotCreated = true;
       cout << "gnome" << gID+1 << "(): Skończyłem robić zabawkę skrzata " << tmp+1 
            << ". Odłożyłem nową zabawkę " << createdToy << "." << endl;
-      cout << "BUFFOR " << createdToy << ": "<< toy[createdToy-1] << endl;      
+
+      cout << "ZABAWKI [1/2/3]: " << toy[0] << "/" << toy[1] << "/" << toy[2] << endl;
+
+      if (toy[0] >= 3 && toy[1] >= 3 && toy[2] >= 3) {
+        cout << "gnome" << gID+1 << "(): Czas dać znać Mikołajowi, że zebraliśmy zabawki." << endl;
+        sem_post(&santaSem);
+      }
+
       sem_post(&gnomeSem[blockedGnome]);
       sem_post(&gnomes);
     }
