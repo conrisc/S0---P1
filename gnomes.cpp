@@ -14,7 +14,7 @@ void *gnome(void *gnomeID) {
     if (firstPartNotCreated) {
       createdToy = gID;
       firstPartNotCreated=false;
-      cout << "gnome" << gID+1 << "(): Zacząłem robić zabawkę.\n";
+      cout << "gnome" << gID+1 << "(): Zacząłem produkcję zabawki.\n";
       blockedGnome=gID;
       sem_post(&gnomes);
       sem_wait(&gnomeSem[gID]);
@@ -23,8 +23,8 @@ void *gnome(void *gnomeID) {
       createdToy+=gID;
       sem_wait(&toyMut);
       toy[createdToy-1]++;
-      cout << "gnome" << gID+1 << "(): Skończyłem robić zabawkę.\n"<<buffor();
-      bool enoughToys = (toy[0]>=3 && toy[1]>=3 && toy[2]>=3);
+      cout << "gnome" << gID+1 << "(): Skończyłem produkcję zabawki (" << createdToy << ").\n" << buffor();
+      bool enoughToys = (toy[0] >= 3 && toy[1] >= 3 && toy[2] >= 3);
       sem_post(&toyMut);
 
       sem_wait(&santaMut);
