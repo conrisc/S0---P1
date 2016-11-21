@@ -10,7 +10,10 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <semaphore.h>
+#include <string>
 using namespace std;
+
+extern string buffor();
 
 extern sem_t gnomes, gnomeSem[3], santaSem, toyMut;
 extern int blockedGnome, createdToy, toy[3];

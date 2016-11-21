@@ -3,21 +3,22 @@
 // Pracownia z Systemów operacyjnych nr 1: Problem synchronizacji wątków
 
 #include "santa.h"
+#include "ioUtils.h"
 
 void *santa(void *sth) {
   while (true) {
     sem_wait(&santaSem);
    
     sem_wait(&toyMut);
-    cout << "santa(): Zabawki się uzbierały, wstaję do pracy..." << endl;
-    
-    for (int i = 0; i < 3; i++)
-      toy[i] -= 3;
+    cout << "\rsanta(): Zabawki się uzbierały, wstaję do pracy..." << endl << buffor() << flush;
 
     sleep(3);
 
-    cout << "santa(): I po robocie. Czas iść spać..." << endl;
-    cout << "ZABAWKI [1/2/3]: " << toy[0] << "/" << toy[1] << "/" << toy[2] << endl;
+    for (int i = 0; i < 3; i++)
+      toy[i] -= 3;
+
+    cout << "\rsanta(): I po robocie, zabawki wysłane. Czas iść spać..." << endl << buffor() << flush;
     sem_post(&toyMut);
   }
+  pthread_exit(NULL);
 }

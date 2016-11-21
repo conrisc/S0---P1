@@ -4,6 +4,7 @@
 
 #include "gnomes.h"
 #include "santa.h"
+#include "ioUtils.h"
 
 sem_t gnomes, gnomeSem[3], santaSem, toyMut;
 int blockedGnome, createdToy, toy[3];
@@ -20,10 +21,17 @@ int main() {
 
   pthread_t threads[4];
 
-  for (long i = 0; i < 3; i++) // Trzy gnomy
-    pthread_create(&threads[i], NULL, gnome, (void *)i);
+  for (long i = 0; i < 3; i++) {
+    toy[i] = 0;
 
+    cout << "main(): Inicjuję gnome" << i+1 << "()..." << endl;
+    pthread_create(&threads[i], NULL, gnome, (void *)i);
+  }
+
+  cout << "main(): Inicjuję santa()..." << endl;
   pthread_create(&threads[3], NULL, santa, NULL); // Mikołaj
+
+  cout << "main(): Wątki potomne aktywne." << endl << buffor() << flush;
 
   for (int i = 0; i < 4; i++)
     pthread_join(threads[i], NULL);

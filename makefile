@@ -3,11 +3,11 @@
 ## Pracownia z Systemów operacyjnych nr 1: Problem synchronizacji wątków
 
 main: main.cpp
-	g++ -std=c++11 -Wall -Werror -pthread -c main.cpp gnomes.cpp santa.cpp
-	g++ -std=c++11 -Wall -Werror -pthread -o main main.o gnomes.o santa.o
+	g++ -std=c++11 -Wall -Werror -pthread -c main.cpp gnomes.cpp santa.cpp ioUtils.cpp
+	g++ -std=c++11 -Wall -Werror -pthread -o main main.o gnomes.o santa.o ioUtils.o
 
 run: main
 	./main
 
 clear:
-	rm -rf main main.o gnomes.o santa.o
+	rm -rf main main.o gnomes.o santa.o ioUtils.o
