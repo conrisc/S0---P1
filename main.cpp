@@ -26,9 +26,9 @@ void *gnome(void *gnomeID) {
       createdToy=gID;
       firstPartNotCreated=false;
       cout<<"  "<<gID<<" Stworzylem pierwsza czesc\n";
-      blockedGnome=0;
+      blockedGnome=gID;
       sem_post(&gnomes);
-      sem_wait(&gnomeSem[0]);
+      sem_wait(&gnomeSem[gID]);
     }
     else {
       createdToy+=gID;
