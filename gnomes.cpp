@@ -8,31 +8,30 @@
 void *gnome(void *gnomeID) {
   int gID = (long)gnomeID;
   while (true) {
-    // sleep(1);
+    // sleep(1); 
     randsleep();
     sem_wait(&gnomes);
-    // cout<<gID<<":\n";
+
     if (firstPartNotCreated) {
       createdToy = gID;
 
       sem_wait(&toyMut);
       firstPartNotCreated=false;
+      cout << "\rgnome" << gID+1 << "(): Zacząłem robić zabawkę. Czekam, aż ktoś ją dokończy." << endl << buffor() << flush;
       sem_post(&toyMut);
 
-      cout << "\rgnome" << gID+1 << "(): Zacząłem robić zabawkę. Czekam, aż ktoś ją dokończy." << endl << buffor() << flush;
-      blockedGnome=gID;
+      blockedGnome = gID;
       sem_post(&gnomes);
-      sem_wait(&gnomeSem[blockedGnome]);
+      sem_wait(&gnomeSem[gID]);
     }
     else {
       int tmp = createdToy;
-      createdToy+=gID;
+      createdToy += gID;
 
       sem_wait(&toyMut);
+
       toy[createdToy-1]++;
       firstPartNotCreated = true;
-      sem_post(&toyMut);
-
       cout << "\rgnome" << gID+1 << "(): Skończyłem robić zabawkę skrzata " << tmp+1 
            << ". Odłożyłem nową zabawkę " << createdToy << "." << endl << buffor() << flush;
 
@@ -43,6 +42,8 @@ void *gnome(void *gnomeID) {
           sem_post(&santaSem);
         }
       }
+
+      sem_post(&toyMut);
 
       sem_post(&gnomeSem[blockedGnome]);
       sem_post(&gnomes);

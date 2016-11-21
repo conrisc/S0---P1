@@ -10,7 +10,12 @@ void randsleep() {
 }
 
 string buffor() {
-  return (  
+  if (toy[0] < 0 || toy[1] < 0 || toy[2] < 0) {
+    string foo = "ERROR";
+    for (int i = 0; i < 30; i++) foo += "\nERROR";
+    return foo;
+  }
+  else return (  
     "ZABAWKI NA SKŁADZIE: [" +
       string("Z1: ") + to_string(toy[0]) + 
       string("  |  Z2: ") + to_string(toy[1]) +
