@@ -10,14 +10,14 @@ void *santa(void *sth) {
     sem_wait(&santaSem);
    
     sem_wait(&toyMut);
-    cout << "\rsanta(): Zabawki się uzbierały, wstaję do pracy..." << endl << buffor() << flush;
+    cout << "\rsanta(): Zabawki się uzbierały, wstaję do pracy...\t\t" << endl << buffor() << flush;
 
-    sleep(3);
+    usleep(120);
 
     for (int i = 0; i < 3; i++)
       toy[i] -= 3;
 
-    cout << "\rsanta(): I po robocie, zabawki wysłane. Czas iść spać..." << endl << buffor() << flush;
+    cout << "\rsanta(): I po robocie, zabawki wysłane. Czas iść spać...\t\t" << endl << buffor() << flush;
     sem_post(&toyMut);
   }
   pthread_exit(NULL);

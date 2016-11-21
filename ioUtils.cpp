@@ -5,7 +5,7 @@
 #include "ioUtils.h"
 
 void randsleep() {
-  int random = rand() % 800000 + 400000;
+  int random = rand() % 32 + 16;
   usleep(random);
 }
 
