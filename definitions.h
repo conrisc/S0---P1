@@ -15,7 +15,7 @@ using namespace std;
 
 extern string buffor();
 
-extern sem_t gnomes, gnomeSem[3], santaSem, santaMut, toyMut;
+extern sem_t gnomes, gnomeSem[3], santaSem, toyMut;
 extern int blockedGnome, createdToy, toy[3];
 extern bool firstPartNotCreated, santaSleeping;
 
