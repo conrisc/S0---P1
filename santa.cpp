@@ -17,6 +17,7 @@ void *santa(void *sth) {
       toy[i] -= 3;
 
     cout << "santa(): Zabawki wysłane. Czas iść spać...\n"<<buffor();
+    santaSleeping = true;
     sem_post(&toyMut);
   }
   pthread_exit(NULL);

@@ -17,6 +17,6 @@ extern string buffor();
 
 extern sem_t gnomes, gnomeSem[3], santaSem, santaMut, toyMut;
 extern int blockedGnome, createdToy, toy[3];
-extern bool firstPartNotCreated;
+extern bool firstPartNotCreated, santaSleeping;
 
 #endif

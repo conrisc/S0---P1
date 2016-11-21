@@ -8,10 +8,12 @@
 
 sem_t gnomes, gnomeSem[3], santaSem, santaMut, toyMut;
 int blockedGnome, createdToy, toy[3];
-bool firstPartNotCreated;
+bool firstPartNotCreated, santaSleeping;
 
 int main() {
   firstPartNotCreated = true;
+  santaSleeping = true;
+
   sem_init(&toyMut, 0, 1);  //mutex na buffory (wszystkie 3)
   sem_init(&gnomes, 0, 1);
   sem_init(&santaSem, 0, 0);

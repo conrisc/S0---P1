@@ -28,10 +28,9 @@ void *gnome(void *gnomeID) {
       sem_post(&toyMut);
 
       sem_wait(&santaMut);
-      int santaSleeping;
-      sem_getvalue(&santaSem, &santaSleeping);
-      if (enoughToys && santaSleeping==0) {
-        cout << "gnome" << gID+1 << "(): MIKOŁAJ.\n";
+      if (enoughToys && santaSleeping) {
+        cout << "gnome" << gID+1 << "(): Budzę Mikołaja.\n";
+        santaSleeping = false;
         sem_post(&santaSem);
       }
       sem_post(&santaMut);
