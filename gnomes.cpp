@@ -9,32 +9,34 @@ void *gnome(void *gnomeID) {
   int gID = (long)gnomeID;
   while (true) {
     // sleep(1);
-    randsleep();
+    // randsleep();
     sem_wait(&gnomes);
-    // cout<<gID<<":\n";
     if (firstPartNotCreated) {
       createdToy = gID;
       firstPartNotCreated=false;
-      cout << "\rgnome" << gID+1 << "(): Zacząłem robić zabawkę. Czekam, aż ktoś ją dokończy." << endl << buffor() << flush;
+      cout << "gnome" << gID+1 << "(): Zacząłem robić zabawkę.\n";
       blockedGnome=gID;
       sem_post(&gnomes);
-      sem_wait(&gnomeSem[blockedGnome]);
+      sem_wait(&gnomeSem[gID]);
     }
     else {
-      int tmp = createdToy;
       createdToy+=gID;
       sem_wait(&toyMut);
       toy[createdToy-1]++;
+      cout << "gnome" << gID+1 << "(): Skończyłem robić zabawkę.\n"<<buffor();
+      bool enoughToys = (toy[0]>=3 && toy[1]>=3 && toy[2]>=3);
       sem_post(&toyMut);
-      firstPartNotCreated = true;
-      cout << "\rgnome" << gID+1 << "(): Skończyłem robić zabawkę skrzata " << tmp+1 
-           << ". Odłożyłem nową zabawkę " << createdToy << "." << endl << buffor() << flush;
 
-      if (toy[0] >= 3 && toy[1] >= 3 && toy[2] >= 3) {
-        cout << "\rgnome" << gID+1 << "(): Czas dać znać Mikołajowi, że zebraliśmy zabawki." << endl << buffor() << flush;
+      sem_wait(&santaMut);
+      int santaSleeping;
+      sem_getvalue(&santaSem, &santaSleeping);
+      if (enoughToys && santaSleeping==0) {
+        cout << "gnome" << gID+1 << "(): MIKOŁAJ.\n";
         sem_post(&santaSem);
       }
+      sem_post(&santaMut);
 
+      firstPartNotCreated = true;
       sem_post(&gnomeSem[blockedGnome]);
       sem_post(&gnomes);
     }
