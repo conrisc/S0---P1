@@ -12,9 +12,9 @@ void randsleep() {
 string buffor() {
   return (
    " [" +
-       to_string(toy[0]) +
-       string("  |  ") + to_string(toy[1]) +
-       string("  |  ") + to_string(toy[2]) +
+       string(     "Z1: ") + to_string(toy[0]) +
+       string("  |  Z2: ") + to_string(toy[1]) +
+       string("  |  Z3: ") + to_string(toy[2]) +
     "]\n"
   );
 }
