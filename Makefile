@@ -9,5 +9,8 @@ main: main.cpp
 run: main
 	./main
 
-clear:
+clean:
+	rm -rf main.o gnomes.o santa.o ioUtils.o
+
+distclean:
 	rm -rf main main.o gnomes.o santa.o ioUtils.o
