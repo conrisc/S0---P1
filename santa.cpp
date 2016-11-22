@@ -11,7 +11,9 @@ void *santa(void *sth) {
     sem_wait(&toyMut);
     cout << "santa(): Zabawki się uzbierały, wstaję do pracy...\n";
 
-    sleep(3);
+    #ifdef SLEEP_ENABLED
+      sleep(3);
+    #endif
 
     for (int i = 0; i < 3; i++)
       toy[i] -= 3;

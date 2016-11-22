@@ -5,6 +5,9 @@
 #ifndef DEFINITIONS_INCLUDED
 #define DEFINITIONS_INCLUDED
 
+// Uncomment to enable sleeping
+// #define SLEEP_ENABLED
+
 #include <cstdlib>
 #include <iostream>
 #include <pthread.h>

@@ -8,7 +8,9 @@
 void *gnome(void *gnomeID) {
   int gID = (long)gnomeID;
   while (true) {
-    randsleep();
+    #ifdef SLEEP_ENABLED
+      randsleep();
+    #endif
     sem_wait(&gnomes);
     if (firstPartNotCreated) {
       createdToy = gID;
