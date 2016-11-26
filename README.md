@@ -17,7 +17,7 @@ Zasoby:
 
 Święty Mikołaj odpoczywa w swojej chatce na biegunie północnym. Jego odpoczynek kończy się, gdy trzeba wysłać zabawki do dzieci - wtedy zaprzęga swoje renifery w zabawki, które potem zostaną rozesłane. Mikołaj chciałby, aby żadne dziecko nie było smutne z powodu otrzymanego prezentu, dlatego wysyła zabawki z biegunu tylko w zestawach po tyle samo zabawek z każdego rodzaju. Ponadto, żeby ułatwić sobie życie, czeka, aż zbierze się odpowiednio dużo zabawek z każdego rodzaju, i dopiero wtedy je wysyła hurtowo. Inaczej mówiąc, czeka, aż zbiorą się przynajmniej po 3 zabawki z Z1, Z2 i Z3 - wtedy wysyła zestaw 3 Z1, 3 Z2 i 3 Z3 (bez nadwyżek, które mogły się wówczas zebrać).
 
-Pracownicy świętego Mikołaja, skrzaty, zajmują się produkcją zabawek. Dobierają się w pary i wspólnymi siłami tworzą zabawki, odpowiednio: S1 i S2 tworzą Z1, S1 i S3 tworzą Z2, a S2 i S3 tworzą Z3. Jeden skrzat może pracować jednocześnie tylko nad jedną zabawką. Skrzaty dobierają się w pary losowo.
+Pracownicy świętego Mikołaja, skrzaty, zajmują się produkcją zabawek. Dobierają się w pary i wspólnymi siłami tworzą zabawki, odpowiednio: S1 i S2 tworzą Z1, S1 i S3 tworzą Z2, a S2 i S3 tworzą Z3. Zabawki tworzone są sekwencyjnie, jedna po drugiej - jeden z trzech skrzatów tworzy pierwszą część zabawki, a następnie jeden z pozostałych dwóch tworzy drugą część zabawki, w rezultacie kończąc ją. Dopóki para skrzatów nie skończy pracy nad zabawką, nie można rozpocząć pracy nad inną. W związku z tym, jeden skrzat może pracować jednocześnie tylko nad jedną zabawką. Skrzaty dobierają się w pary losowo.
 
 # Wytyczne techniczne
 1. Program powinien znaleźć się w osobnym repozytorium i powinien zawierać plik Makefile w katalogu głównym.
